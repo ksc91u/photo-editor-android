@@ -2,6 +2,7 @@ package com.ahmedadeltito.photoeditorsdk;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.os.Environment;
 import android.support.annotation.ColorInt;
@@ -202,8 +203,11 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
             try {
                 FileOutputStream out = new FileOutputStream(file);
                 if (parentView != null) {
-                    parentView.setDrawingCacheEnabled(true);
-                    parentView.getDrawingCache().compress(Bitmap.CompressFormat.JPEG, 80, out);
+                    Bitmap bitmap = Bitmap.createBitmap(parentView.getWidth(), parentView.getHeight(), Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(bitmap);
+                    parentView.draw(canvas);
+                    canvas.setBitmap(null);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
                 }
                 out.flush();
                 out.close();
