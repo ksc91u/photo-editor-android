@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.ColorInt;
 import android.util.Log;
@@ -216,6 +217,27 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
             }
         }
         return selectedOutputPath;
+    }
+
+    public boolean saveImage(Uri dst) {
+        File file = new File(dst.getPath());
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            if (parentView != null) {
+                Bitmap bitmap = Bitmap.createBitmap(parentView.getWidth(), parentView.getHeight(), Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                parentView.draw(canvas);
+                canvas.setBitmap(null);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+            }
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            Log.d("PhotoEditorSDK", "Failed to save to "+dst.toString());
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private boolean isSDCARDMounted() {
