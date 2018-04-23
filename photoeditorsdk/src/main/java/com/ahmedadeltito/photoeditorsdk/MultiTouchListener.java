@@ -26,6 +26,8 @@ class MultiTouchListener implements OnTouchListener {
     private ImageView photoEditImageView;
     private RelativeLayout parentView;
 
+    private boolean enlarge = false;
+
     private OnMultiTouchListener onMultiTouchListener;
     private OnPhotoEditorSDKListener onPhotoEditorSDKListener;
 
@@ -116,6 +118,23 @@ class MultiTouchListener implements OnTouchListener {
                 firePhotoEditorSDKListener(view, true);
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (isViewInBounds(deleteView, x, y)) {
+                    if (!enlarge) {
+                        enlarge = true;
+                        deleteView.animate().scaleX(1.2f).scaleY(1.2f).start();
+                        float viewScaleX = view.getScaleX();
+                        float viewScaleY = view.getScaleY();
+                        view.animate().scaleX(viewScaleX * 1.0f / 3.0f).scaleY(viewScaleY * 1.0f / 3.0f).start();
+                    }
+                } else {
+                    if (enlarge) {
+                        enlarge = false;
+                        deleteView.animate().scaleX(5.0f / 6.0f).scaleY(5.0f / 6.0f).start();
+                        float viewScaleX = view.getScaleX();
+                        float viewScaleY = view.getScaleY();
+                        view.animate().scaleX(viewScaleX * 3.0f).scaleY(viewScaleY * 3.0f).start();
+                    }
+                }
                 int pointerIndexMove = event.findPointerIndex(mActivePointerId);
                 if (pointerIndexMove != -1) {
                     float currX = event.getX(pointerIndexMove);
@@ -137,6 +156,7 @@ class MultiTouchListener implements OnTouchListener {
                     view.animate().translationY(0).translationY(0);
                 }
                 deleteView.setVisibility(View.GONE);
+                deleteView.animate().scaleX(5.0f / 6.0f).scaleY(5.0f / 6.0f).start();
                 firePhotoEditorSDKListener(view, false);
                 float mCurrentCancelX = event.getRawX();
                 float mCurrentCancelY = event.getRawY();
@@ -249,6 +269,7 @@ class MultiTouchListener implements OnTouchListener {
 
     interface OnMultiTouchListener {
         void onEditTextClickListener(String text, int colorCode);
+
         void onRemoveViewListener(View removedView);
     }
 }
