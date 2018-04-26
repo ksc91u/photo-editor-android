@@ -176,7 +176,11 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
     }
 
     public boolean isEmpty(){
-        return addedViews.size() == 0 && brushDrawingView.isClean();
+        boolean notAddToParent = true;
+        for (int i = 0; i < addedViews.size(); i++) {
+            notAddToParent = notAddToParent && (addedViews.get(i).getParent() == null);
+        }
+        return notAddToParent && brushDrawingView.isClean();
     }
 
     public void clearBrushAllViews() {
@@ -190,8 +194,6 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
         }
         if (brushDrawingView != null)
             brushDrawingView.clearAll();
-
-        isClean = true;
     }
 
     public String saveImage(String folderName, String imageName) {

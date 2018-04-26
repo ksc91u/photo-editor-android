@@ -140,7 +140,6 @@ public class BrushDrawingView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         canvas.drawPath(drawPath, drawPaint);
-        isClean = false;
     }
 
     public boolean isClean() {
@@ -149,6 +148,7 @@ public class BrushDrawingView extends View {
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
+        isClean = false;
         if (brushDrawMode) {
             float touchX = event.getX();
             float touchY = event.getY();
