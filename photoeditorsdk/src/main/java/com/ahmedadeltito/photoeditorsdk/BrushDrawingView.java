@@ -31,6 +31,8 @@ public class BrushDrawingView extends View {
     private Bitmap canvasBitmap;
     private boolean brushDrawMode;
 
+    private boolean isClean = true;
+
     private OnPhotoEditorSDKListener onPhotoEditorSDKListener;
 
     public BrushDrawingView(Context context) {
@@ -119,6 +121,7 @@ public class BrushDrawingView extends View {
 
     void clearAll() {
         drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        isClean = true;
         invalidate();
     }
 
@@ -137,6 +140,11 @@ public class BrushDrawingView extends View {
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
         canvas.drawPath(drawPath, drawPaint);
+        isClean = false;
+    }
+
+    public boolean isClean() {
+        return isClean;
     }
 
     @Override

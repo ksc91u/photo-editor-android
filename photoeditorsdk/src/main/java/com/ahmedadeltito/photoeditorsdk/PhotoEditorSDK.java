@@ -36,6 +36,8 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
     private OnPhotoEditorSDKListener onPhotoEditorSDKListener;
     private View addTextRootView;
 
+    private boolean isClean = true;
+
     private PhotoEditorSDK(PhotoEditorSDKBuilder photoEditorSDKBuilder) {
         this.context = photoEditorSDKBuilder.context;
         this.parentView = photoEditorSDKBuilder.parentView;
@@ -173,6 +175,10 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
         }
     }
 
+    public boolean isEmpty(){
+        return addedViews.size() == 0 && brushDrawingView.isClean();
+    }
+
     public void clearBrushAllViews() {
         if (brushDrawingView != null)
             brushDrawingView.clearAll();
@@ -184,6 +190,8 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
         }
         if (brushDrawingView != null)
             brushDrawingView.clearAll();
+
+        isClean = true;
     }
 
     public String saveImage(String folderName, String imageName) {
