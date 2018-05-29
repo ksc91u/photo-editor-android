@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.ColorInt;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -194,6 +195,18 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
         }
         if (brushDrawingView != null)
             brushDrawingView.clearAll();
+    }
+
+    @Nullable
+    public Bitmap saveBitmap() {
+        if (parentView != null) {
+            Bitmap bitmap = Bitmap.createBitmap(parentView.getWidth(), parentView.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            parentView.draw(canvas);
+            canvas.setBitmap(null);
+            return bitmap;
+        }
+        return null;
     }
 
     public String saveImage(String folderName, String imageName) {
