@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.ColorInt;
@@ -69,12 +70,22 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
     }
 
     public void addText(String text, int colorCodeTextView){
-        addText(text, colorCodeTextView, R.layout.photo_editor_sdk_text_item_list);
+        addText(text, colorCodeTextView, R.layout.photo_editor_sdk_text_item_list, null, 0);
     }
 
-    public void addText(String text, int colorCodeTextView, int layout) {
+    public void addText(String text, int colorCodeTextView, @Nullable Drawable background, int backgroundId){
+        addText(text, colorCodeTextView, R.layout.photo_editor_sdk_text_item_list, background, backgroundId);
+    }
+
+    public void addText(String text, int colorCodeTextView, int layout, @Nullable Drawable background, int backgroundId) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         addTextRootView = inflater.inflate(layout, null);
+
+        View viewById = addTextRootView.findViewById(backgroundId);
+        if(viewById != null){
+            viewById.setBackground(background);
+        }
+
         TextView addTextView = (TextView) addTextRootView.findViewById(R.id.photo_editor_sdk_text_tv);
         addTextView.setGravity(Gravity.CENTER);
         addTextView.setText(text);
