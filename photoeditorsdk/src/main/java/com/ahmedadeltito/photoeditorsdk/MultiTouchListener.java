@@ -161,14 +161,21 @@ class MultiTouchListener implements OnTouchListener {
                 float mCurrentCancelX = event.getRawX();
                 float mCurrentCancelY = event.getRawY();
                 if (mCurrentCancelX == mPrevRawX || mCurrentCancelY == mPrevRawY) {
+                    View textView = null;
                     if (view instanceof TextView) {
+                        textView = view;
+                    }else{
+                        textView = view.findViewWithTag("photo_editor_sdk_text_tv");
+                    }
+
+                    if(textView != null){
                         if (onMultiTouchListener != null) {
                             onMultiTouchListener.onEditTextClickListener(
-                                    ((TextView) view).getText().toString(), ((TextView) view).getCurrentTextColor());
+                                    ((TextView) textView).getText().toString(), ((TextView) textView).getCurrentTextColor());
                         }
                         if (onPhotoEditorSDKListener != null) {
                             onPhotoEditorSDKListener.onEditTextChangeListener(
-                                    ((TextView) view).getText().toString(), ((TextView) view).getCurrentTextColor());
+                                    ((TextView) textView).getText().toString(), ((TextView) textView).getCurrentTextColor());
                         }
                     }
                 }
