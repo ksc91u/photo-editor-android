@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PhotoEditorSDK</string>
+    <string name="backgroundViewIdKey">backgroundViewIdKey</string>
+    <string name="backgroundDrawableKey">backgroundDrawableKey</string>
 </resources>

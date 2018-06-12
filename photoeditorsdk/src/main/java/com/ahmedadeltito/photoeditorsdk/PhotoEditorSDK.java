@@ -38,6 +38,9 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
     private OnPhotoEditorSDKListener onPhotoEditorSDKListener;
     private View addTextRootView;
 
+    public static final int backgroundViewIdKey = R.string.backgroundViewIdKey;
+    public static final int backgroundDrawableKey = R.string.backgroundDrawableKey;
+
     private boolean isClean = true;
 
     private PhotoEditorSDK(PhotoEditorSDKBuilder photoEditorSDKBuilder) {
@@ -87,7 +90,11 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
         }
 
         TextView addTextView = (TextView) addTextRootView.findViewById(R.id.photo_editor_sdk_text_tv);
+
         addTextView.setTag("photo_editor_sdk_text_tv");
+        addTextView.setTag(backgroundViewIdKey, backgroundId);
+        addTextView.setTag(backgroundDrawableKey, background);
+
         addTextView.setGravity(Gravity.CENTER);
         addTextView.setText(text);
         if (colorCodeTextView != -1)

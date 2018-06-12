@@ -1,6 +1,7 @@
 package com.ahmedadeltito.photoeditorsdk;
 
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -168,6 +169,15 @@ class MultiTouchListener implements OnTouchListener {
                         textView = view.findViewWithTag("photo_editor_sdk_text_tv");
                     }
 
+                    Drawable shape = null;
+                    int bgViewId = -1;
+                    if(textView.getTag(PhotoEditorSDK.backgroundViewIdKey) instanceof  Integer){
+                        bgViewId = (int) textView.getTag(PhotoEditorSDK.backgroundViewIdKey);
+                    }
+                    if(textView.getTag(PhotoEditorSDK.backgroundDrawableKey) instanceof  Drawable){
+                        shape = (Drawable) textView.getTag(PhotoEditorSDK.backgroundDrawableKey);
+                    }
+
                     if(textView != null){
                         if (onMultiTouchListener != null) {
                             onMultiTouchListener.onEditTextClickListener(
@@ -175,7 +185,7 @@ class MultiTouchListener implements OnTouchListener {
                         }
                         if (onPhotoEditorSDKListener != null) {
                             onPhotoEditorSDKListener.onEditTextChangeListener(
-                                    ((TextView) textView).getText().toString(), ((TextView) textView).getCurrentTextColor());
+                                    ((TextView) textView).getText().toString(), ((TextView) textView).getCurrentTextColor(), shape, bgViewId);
                         }
                     }
                 }
