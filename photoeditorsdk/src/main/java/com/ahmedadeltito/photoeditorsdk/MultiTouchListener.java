@@ -2,6 +2,7 @@ package com.ahmedadeltito.photoeditorsdk;
 
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -181,7 +182,7 @@ class MultiTouchListener implements OnTouchListener {
                     if(textView != null){
                         if (onMultiTouchListener != null) {
                             onMultiTouchListener.onEditTextClickListener(
-                                    ((TextView) textView).getText().toString(), ((TextView) textView).getCurrentTextColor());
+                                    ((TextView) textView).getText().toString(), ((TextView) textView).getCurrentTextColor(), shape, bgViewId);
                         }
                         if (onPhotoEditorSDKListener != null) {
                             onPhotoEditorSDKListener.onEditTextChangeListener(
@@ -285,7 +286,7 @@ class MultiTouchListener implements OnTouchListener {
     }
 
     interface OnMultiTouchListener {
-        void onEditTextClickListener(String text, int colorCode);
+        void onEditTextClickListener(String text, int colorCode, @Nullable Drawable shape, int viewId);
 
         void onRemoveViewListener(View removedView);
     }
