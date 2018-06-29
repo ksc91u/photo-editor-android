@@ -73,16 +73,17 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
     }
 
     public void addText(String text, int colorCodeTextView){
-        addText(text, colorCodeTextView, R.layout.photo_editor_sdk_text_item_list, null, 0);
+        addText(text, R.layout.photo_editor_sdk_text_item_list, null, 0, new PhotoEditorFontInfo(Typeface.DEFAULT, 40.0f, colorCodeTextView));
     }
 
     public void addText(String text, int colorCodeTextView, @Nullable Drawable background, int backgroundId){
-        addText(text, colorCodeTextView, R.layout.photo_editor_sdk_text_item_list, background, backgroundId);
+        addText(text, R.layout.photo_editor_sdk_text_item_list, background, backgroundId, new PhotoEditorFontInfo(Typeface.DEFAULT, 40.0f, colorCodeTextView));
     }
 
-    public void addText(String text, int colorCodeTextView, int layout, @Nullable Drawable background, int backgroundId) {
+    public void addText(String text, int layout, @Nullable Drawable background, int backgroundId, PhotoEditorFontInfo fontInfo) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         addTextRootView = inflater.inflate(layout, null);
+        int colorCodeTextView =fontInfo.getFontColor();
 
         View viewById = addTextRootView.findViewById(backgroundId);
         if(viewById != null){
@@ -98,6 +99,8 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
         addTextView.setGravity(Gravity.CENTER);
         addTextView.setText(text);
         addTextView.setTextColor(colorCodeTextView);
+        addTextView.setTypeface(fontInfo.getTypeface());
+        addTextView.setTextSize(fontInfo.getFontSize());
         MultiTouchListener multiTouchListener = new MultiTouchListener(deleteView,
                 parentView, this.imageView, onPhotoEditorSDKListener);
         multiTouchListener.setOnMultiTouchListener(this);
@@ -311,7 +314,7 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
     }
 
     @Override
-    public void onEditTextClickListener(String text, int colorCode, @Nullable Drawable shape, int viewId) {
+    public void onEditTextClickListener(String text, @Nullable Drawable shape, int viewId, PhotoEditorFontInfo textInfo) {
         if (addTextRootView != null) {
             parentView.removeView(addTextRootView);
             addedViews.remove(addTextRootView);
