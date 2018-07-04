@@ -7,10 +7,14 @@ public class PhotoEditorFontInfo {
     private Typeface typeface;
     private Float fontSize;
     private int fontColor;
+    private int textAlignment;
 
     public static PhotoEditorFontInfo fromTextView(TextView textView){
         float scale = textView.getContext().getResources().getDisplayMetrics().scaledDensity;
-        return new PhotoEditorFontInfo(textView.getTypeface(), textView.getTextSize()/scale, textView.getCurrentTextColor());
+        return new PhotoEditorFontInfo(textView.getTypeface(),
+                textView.getTextSize()/scale,
+                textView.getCurrentTextColor(),
+                textView.getTextAlignment());
     }
 
     public Typeface getTypeface() {
@@ -37,10 +41,26 @@ public class PhotoEditorFontInfo {
         this.fontColor = fontColor;
     }
 
+    public int getTextAlignment() {
+        return textAlignment;
+    }
+
+    public void setTextAlignment(int textAlignment) {
+        this.textAlignment = textAlignment;
+    }
+
     public PhotoEditorFontInfo(Typeface typeface, Float fontSize, int fontColor) {
         this.typeface = typeface;
         this.fontSize = fontSize;
         this.fontColor = fontColor;
+        this.textAlignment = TextView.TEXT_ALIGNMENT_INHERIT;
+    }
+
+    public PhotoEditorFontInfo(Typeface typeface, Float fontSize, int fontColor, int textAlignment) {
+        this.typeface = typeface;
+        this.fontSize = fontSize;
+        this.fontColor = fontColor;
+        this.textAlignment = textAlignment;
     }
 
     @Override
@@ -51,6 +71,7 @@ public class PhotoEditorFontInfo {
         PhotoEditorFontInfo that = (PhotoEditorFontInfo) o;
 
         if (fontColor != that.fontColor) return false;
+        if (textAlignment != that.textAlignment) return false;
         if (typeface != null ? !typeface.equals(that.typeface) : that.typeface != null)
             return false;
         return fontSize != null ? fontSize.equals(that.fontSize) : that.fontSize == null;
@@ -61,6 +82,7 @@ public class PhotoEditorFontInfo {
         int result = typeface != null ? typeface.hashCode() : 0;
         result = 31 * result + (fontSize != null ? fontSize.hashCode() : 0);
         result = 31 * result + fontColor;
+        result = 31 * result + textAlignment;
         return result;
     }
 }

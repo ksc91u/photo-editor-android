@@ -101,6 +101,7 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
         addTextView.setTextColor(colorCodeTextView);
         addTextView.setTypeface(fontInfo.getTypeface());
         addTextView.setTextSize(fontInfo.getFontSize());
+        addTextView.setTextAlignment(fontInfo.getTextAlignment());
         MultiTouchListener multiTouchListener = new MultiTouchListener(deleteView,
                 parentView, this.imageView, onPhotoEditorSDKListener);
         multiTouchListener.setOnMultiTouchListener(this);
