@@ -181,7 +181,7 @@ class MultiTouchListener implements OnTouchListener {
                             shape = (Drawable) textView.getTag(PhotoEditorSDK.backgroundDrawableKey);
                         }
                         if (onMultiTouchListener != null) {
-                            onMultiTouchListener.onEditTextClickListener(
+                            onMultiTouchListener.onEditTextClickListener(view,
                                     ((TextView) textView).getText().toString(), shape, bgViewId, PhotoEditorFontInfo.fromTextView((TextView) textView));
                         }
                         if (onPhotoEditorSDKListener != null) {
@@ -286,7 +286,7 @@ class MultiTouchListener implements OnTouchListener {
     }
 
     interface OnMultiTouchListener {
-        void onEditTextClickListener(String text, @Nullable Drawable shape, int viewId, PhotoEditorFontInfo fontInfo);
+        void onEditTextClickListener(View rootView, String text, @Nullable Drawable shape, int viewId, PhotoEditorFontInfo fontInfo);
 
         void onRemoveViewListener(View removedView);
     }

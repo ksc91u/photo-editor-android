@@ -315,11 +315,9 @@ public class PhotoEditorSDK implements MultiTouchListener.OnMultiTouchListener {
     }
 
     @Override
-    public void onEditTextClickListener(String text, @Nullable Drawable shape, int viewId, PhotoEditorFontInfo textInfo) {
-        if (addTextRootView != null) {
-            parentView.removeView(addTextRootView);
-            addedViews.remove(addTextRootView);
-        }
+    public void onEditTextClickListener(View view, String text, @Nullable Drawable shape, int viewId, PhotoEditorFontInfo textInfo) {
+        parentView.removeView(view);
+        addedViews.remove(view);
     }
 
     @Override
